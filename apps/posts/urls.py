@@ -1,7 +1,7 @@
 from django.urls import path
 #from .views import posts            #-> Vista basada en funciones
 from .views import *    #-> Vista basada en clases
-#from . import views
+from . import views
 
 app_name = 'apps.posts'
 
@@ -10,6 +10,7 @@ urlpatterns = [
     #path('posts/', posts, name='posts'),
 
     #-> Vista basada en clases
+    path('', views.index, name='index'),# Ruta para el índice (página de inicio)
     path('posts/', PostListView.as_view(), name='posts'),
     path("posts/<int:id>/", PostDetailView.as_view(), name="post_individual"),
     path('post/', PostCreateView.as_view(), name='crear_post'),

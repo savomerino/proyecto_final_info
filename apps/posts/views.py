@@ -7,11 +7,19 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 
 # Create your views here.
-
+def index(request):
+    # Obtener los 3 posts más recientes
+    posts = Post.objects.all().order_by('-fecha_publicacion')[:3]
+    print(posts)  # Para verificar el contenido de posts
+    return render(request, 'index.html', {'posts': posts})
 #-> Vista basada en funciones
 def posts(request):
     posts = Post.objects.all()
     return render(request, 'posts.html', {'posts' : posts})
+
+def lista_posts(request):
+    posts = Post.objects.all()  # o alguna otra lógica
+    return render(request, 'tu_template.html', {'posts': posts})
 
 #-> Vista basada en clases
 class PostListView(ListView):
@@ -141,3 +149,4 @@ class ComentarioDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('apps.posts:post_individual', args=[self.object.posts.id])
+    

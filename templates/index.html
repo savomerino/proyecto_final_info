@@ -1,9 +1,32 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block contenido %}
+<div class="container mt-5">
 
-{% block contenido %} 
-    <h1>Esta 
-        es la
-        página
-        index</h1>
-{% endblock %} 
+    <!-- Título principal -->
+    <h1 class="text-center mb-5">Bienvenidos al Blog ECONOMIA 4.0</h1>
+
+    <img src="{% static 'img/portada.jpg' %}" alt="¡GANA DINERO!" style="max-width: 100%; height: auto;">
+
+    <!-- Texto de Inicio -->
+
+    <div style="max-width: 800px; margin: 100px auto; padding: 20px; text-align: center;">
+        <h1 style="font-family: 'Georgia', serif; font-size: 2.5rem; margin-bottom: 40px; color: #2c3e50; text-align: center;">
+            Explorando el Mundo de la Economía y las Finanzas
+        </h1>
+        <p style="font-family: 'Arial', sans-serif; font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px; color: #34495e; padding-left: 20px; padding-right: 20px;">
+            En un mundo donde las decisiones financieras son más cruciales que nunca, nos adentramos en los conceptos, tendencias y herramientas que moldean nuestra economía. Aquí, desglosamos temas complejos en ideas claras y accesibles, desde estrategias de inversión hasta análisis de mercado y consejos prácticos para la gestión de finanzas personales.
+        </p>
+        <p style="font-family: 'Arial', sans-serif; font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px; color: #34495e; padding-left: 20px; padding-right: 20px;">
+            Sumérgete en artículos que abordan desde lo macroeconómico hasta lo cotidiano, y descubre cómo las decisiones que tomamos hoy pueden impactar nuestro futuro. Este es el lugar ideal para aquellos que buscan no solo entender, sino también dominar su relación con el dinero y construir un futuro financiero sólido.
+        </p>
+        <p style="font-family: 'Arial', sans-serif; font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px; color: #34495e; padding-left: 20px; padding-right: 20px;">
+            Únete a nosotros en este viaje de conocimiento y empoderamiento financiero, donde cada publicación está diseñada para inspirar, educar y equipar a nuestros lectores con las herramientas necesarias para navegar el dinámico panorama económico.
+        </p>
+    </div>
+
+<!-- Espaciado inferior para evitar que el contenido se superponga con el pie de página -->
+<div style="height: 100px;"></div>
+
+{% endblock contenido %}

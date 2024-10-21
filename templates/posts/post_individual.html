@@ -2,34 +2,44 @@
 {% load static %}
 {% load colaborador_tags %}
 
-
 {% block contenido %}
-<center>
-<div class="container-fluid">
+<div class="container text-center">
 
-    <table>{{ posts.titulo }}</table>
-    {% if posts.subtitulo != None %}
-        <table>{{ posts.subtitulo }}</table>
+    <!-- Título del post -->
+    <h1>{{ posts.titulo }}</h1>
+
+    <!-- Subtítulo del post (si existe) -->
+    {% if posts.subtitulo %}
+        <h2>{{ posts.subtitulo }}</h2>
     {% endif %}
-    <table>{{ posts.categoria }}</table>
-    <br>
-    <h6>{{ posts.texto }}</h6>
-    <img src="{{ posts.imagen.url }}" alt="">
-    <li>Subido por {{ posts.autor }}</li>
 
+    <!-- Imagen del post -->
+    {% if posts.imagen %}
+        <div class="post-imagen my-3">
+            <img src="{{ posts.imagen.url }}" alt="Imagen del post" class="img-fluid">
+        </div>
+    {% endif %}
+
+    <!-- Autor alineado a la derecha debajo de la imagen -->
+    <p class="text-muted text-right"><small>Subido por {{ posts.autor }}</small></p>
+
+    <!-- Categoría del post -->
+    <h3>{{ posts.categoria }}</h3>
+
+    <!-- Texto del post -->
+    <p>{{ posts.texto }}</p>
+
+    <!-- Botones de modificar y eliminar (sólo para superuser o colaboradores) -->
     {% if user.is_superuser or request.user|has_group:"Colaborador" %}
-        <div class="container-fluid" style="margin-top: 30px;">
-            <a id="boton_post" href="{% url 'apps.posts:post_update' pk=posts.id %}">Modificar post</a>
-        </div>
-        <div class="container-fluid" style="margin-top: 30px;">
-            <a id="boton_post" href="{% url 'apps.posts:post_delete' pk=posts.id %}">Eliminar post</a>
+        <div class="my-3">
+            <a id="boton_post" class="btn btn-warning" href="{% url 'apps.posts:post_update' pk=posts.id %}">Modificar publicación</a>
+            <a id="boton_post" class="btn btn-danger" href="{% url 'apps.posts:post_delete' pk=posts.id %}">Eliminar publicación</a>
         </div>
     {% endif %}
+
+    <!-- Sección de comentarios -->
+    <div class="mt-5">
+        {% include 'comentario/crear_comentario.html' %}
+    </div>
 </div>
-
-<!-- Aquí seguirán estando los comentarios, pero lo separadamos en otro template y lo incluimos en este -->
-{% include 'comentario/crear_comentario.html' %}
-
-</center>
-
 {% endblock %}
