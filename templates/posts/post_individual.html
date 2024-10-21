@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load colaborador_tags %}
+
+
+{% block contenido %}
+<center>
+<div class="container-fluid">
+
+    <table>{{ posts.titulo }}</table>
+    {% if posts.subtitulo != None %}
+        <table>{{ posts.subtitulo }}</table>
+    {% endif %}
+    <table>{{ posts.categoria }}</table>
+    <br>
+    <h6>{{ posts.texto }}</h6>
+    <img src="{{ posts.imagen.url }}" alt="">
+    <li>Subido por {{ posts.autor }}</li>
+
+    {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+        <div class="container-fluid" style="margin-top: 30px;">
+            <a id="boton_post" href="{% url 'apps.posts:post_update' pk=posts.id %}">Modificar post</a>
+        </div>
+        <div class="container-fluid" style="margin-top: 30px;">
+            <a id="boton_post" href="{% url 'apps.posts:post_delete' pk=posts.id %}">Eliminar post</a>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Aquí seguirán estando los comentarios, pero lo separadamos en otro template y lo incluimos en este -->
+{% include 'comentario/crear_comentario.html' %}
+
+</center>
+
+{% endblock %}

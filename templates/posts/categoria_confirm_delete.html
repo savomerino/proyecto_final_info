@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load colaborador_tags %}
+
+{% block contenido %}
+<center>
+    {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+        <div class="container-fluid">
+            <h1>Eliminar Categoría</h1>
+            <p>¿Estás seguro que quieres eliminar la categoría "{{ object.nombre }}"?</p>
+            <form method="post">
+                {% csrf_token %}
+                <input type="submit" value="Sí, eliminar">
+                <a style="color: black;" href="{% url 'apps.posts:categoria_list' %}">No, cancelar</a>
+            </form>
+        </div>
+    {% else %}
+        <div class="container-fluid" style="margin: 300px;">
+            <h1>¡No tienes permiso para entrar a esta página!</h1>
+        </div>
+    {% endif %}
+</center>
+{% endblock %}

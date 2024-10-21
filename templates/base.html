@@ -1,0 +1,91 @@
+{% load static %}  {# Carga el sistema de archivos estáticos de Django #}
+{% load colaborador_tags %}  {# Carga etiquetas personalizadas (si las tienes) #}
+
+<!doctype html>
+<html lang="es-ar">
+<head>
+    <title>{% block title %}
+        
+        Página de Inicio
+        
+    {% endblock title %}</title>  {# Define el título de la página que puede ser sobrescrito por otras plantillas #}
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />  {# Configuración del viewport para dispositivos móviles #}
+
+    <!-- Bootstrap CSS v5.3.2 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous"
+    />
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="{% static 'img/PF.jpeg' %}" id="menu_toggle" style="max-width: 300px; margin: 30px">  {# Logo de la página #}
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'index' %}">Inicio</a></li>  {# Enlace a la página de inicio #}
+                <li><a href="{% url 'nosotros' %}">Acerca de Nosotros</a></li>  {# Enlace de ejemplo, puede ser reemplazado por una URL real #}
+                <li><a href="{% url 'apps.posts:posts' %}">Posts</a></li>  {# Enlace a la lista de posts #}
+                <li><a href="{% url 'apps.contacto:contacto' %}">Contáctanos</a></li>  {# Enlace al formulario de contacto #}
+                
+                <div class="dropdown">  {# Dropdown para opciones de usuario #}
+                    {% if user.is_authenticated %}  {# Verifica si el usuario está autenticado #}
+                    {% csrf_token %}
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Cerrar sesión</button>
+                    </form>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>  {# Opción para iniciar sesión si el usuario no está autenticado #}
+                    {% endif %}
+                    <div class="dropdown-content">  {# Contenido del dropdown #}
+                        <table>
+                            <tr>
+                                {% if user.is_superuser or request.user|has_group:"Colaborador" %}  {# Verifica si el usuario es superusuario o pertenece a un grupo específico #}
+                                    <td><a href="{% url 'apps.usuario:usuario_list' %}">Lista de usuarios</a></td>  {# Enlace para la lista de usuarios #}
+                                {% endif %}
+                            </tr>
+                            <tr>
+                                <td><a href={% url 'apps.posts:categoria_list'%}>Lista de Categorias</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href={% url 'apps.posts:posts'%}>Lista de posts</a></td>  {# Enlace a la lista de posts #}
+                            </tr>
+                        </table>
+                    </div>
+                </div>  {# Cierre del div dropdown #}
+            </ul>  {# Cierre del ul #}
+        </nav>
+    </header>
+
+    {% block contenido %}  {# Comienza el bloque de contenido donde se insertará el contenido específico de las páginas que extienden esta plantilla #}
+    {% endblock %}  {# Cierre del bloque de contenido #}
+
+    <main></main>  {# Sección principal, actualmente vacía #}
+    
+    <footer id="sticky-footer" class="flex-shrink-0 py-4 bg-dark text-white-50">  {# Footer con un diseño básico #}
+        <div class="container text-center">
+            <small>Copyright &copy; Your Website</small>  {# Texto de copyright #}
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"
+    ></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load colaborador_tags %}
+
+{% block contenido %}
+<center>
+    <div class="container-fluid">
+        <h1>Categorías</h1>
+        <br>
+        <ul>
+            {% for categoria in categorias %}
+                <li><a href="{% url 'apps.posts:posts_por_categoria' pk=categoria.pk %}">{{ categoria.nombre }}</a>
+                    {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+                        (<a style="color: black;" href="{% url 'apps.posts:categoria_delete' pk=categoria.pk %}">Eliminar</a>)
+                    {% endif %}
+                </li>
+                {% empty %}
+                <li>No hay categorías</li>
+            {% endfor %}
+        </ul>
+    </div>
+</center>
+
+{% endblock contenido %}

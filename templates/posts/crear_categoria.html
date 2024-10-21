@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load colaborador_tags %}
+
+{% block contenido %}
+<center>
+    {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+        <div class="container-fluid">
+            <h1>Agregar nueva categoría</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Agregar">
+            </form>
+            <div class="container-fluid" style="margin-top: 300px;">
+                <a id="boton_post" href="{% url 'apps.posts:categoria_list' %}">Listar todas las categorías</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="container-fluid" style="margin: 300px;">
+            <h1>¡No tienes permiso para entrar a esta página!</h1>
+        </div>
+    {% endif %}
+</center>
+{% endblock %}
