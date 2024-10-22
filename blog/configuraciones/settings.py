@@ -20,10 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-dg*))(x$uaih3y(18x47awrju++c$z*$gzu$aye+3!xawo*ezp'
 
 # Modo de depuración activado. En producción debe estar en False para evitar la exposición de información sensible.
-DEBUG = True
+DEBUG = False
 
 # Lista de hosts permitidos para acceder al sitio. En producción se deben agregar los dominios permitidos.
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['your-app-name.herokuapp.com', 'localhost', '127.0.0.1']
+
 
 # Modelo de usuario personalizado para utilizar una tabla específica llamada "USUARIO" en la aplicación "usuario".
 AUTH_USER_MODEL = 'usuario.USUARIO'
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
 # Middleware que procesa las solicitudes y respuestas HTTP.
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',  # Provee medidas de seguridad adicionales
+    'whitenoise.middleware.WhiteNoiseMiddleware', #middleware necesario para manejar archivos estaticos en Heroku
     'django.contrib.sessions.middleware.SessionMiddleware',  # Maneja las sesiones del usuario
     'django.middleware.common.CommonMiddleware',  # Provee funcionalidad general, como el manejo de cabeceras HTTP
     'django.middleware.csrf.CsrfViewMiddleware',  # Protección contra ataques CSRF

@@ -1,0 +1,1 @@
+web: gunicorn Trabajp-Final.wsgi --log-file -
